@@ -49,16 +49,15 @@ These checkpoints can be downloaded using [download_ckpts.sh](download_ckpts.sh)
 | K=36, β=0.5, BCE | 20.1 | 38.5 | 34.2 | 71.3 | 94.4 | 94.1 | 91.8 | 92.3 |
 
 ### Key Configs
-- **`--bcal-loss-mode k_positives_ce`**: Specifies the  β-CAL loss computation mode:
+- **`--tcil-loss-mode k_positives_ce`**: Specifies the  β-CAL loss computation mode:
   - `k_positives_bce`: Binary cross-entropy loss with K positive samples per image
   - `k_positives_ce`: Cross-entropy loss with K positive samples
 
 - **`--beta 0.5`**: Beta parameter for controlling contextualization in the loss.
 
-- **`--fg-loss-fn global+bcal`**: Specifies which loss functions to use. Options include:
-  - `global`: Standard CLIP contrastive loss between CLS and EOS embeddings
-  - `bcal`: β Contextualized Contrastive Alignment Loss for fine-grained alignment
-  - Combine multiple losses with `+` (e.g., `global+bcal`)
+- **`--fg-loss-fn cls+tcil`**: Specifies which loss functions to use. Options include:
+  - `cls`: Standard CLIP contrastive loss between CLS and EOS embeddings
+  - `tcil`: β Contextualized Contrastive Alignment Loss for fine-grained alignment
 
 - **`--epochs 10`**: Number of training epochs.
 
