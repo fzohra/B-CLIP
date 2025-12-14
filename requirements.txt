@@ -1,0 +1,15 @@
+numpy
+pillow
+pandas
+tqdm
+regex
+ftfy
+spacy
+timm==1.0.15
+wandb
+accelerate==1.6.0
+submitit==1.5.2
+opencv-python
+matplotlib
+scipy
+entmax

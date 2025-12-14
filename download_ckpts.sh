@@ -1,0 +1,2 @@
+gdown https://drive.google.com/uc?id=1nNbYLlU_1VcbEioLL7yX_rzARAzxD6q_ #ckpt β-CLIP: CE, β=0.5, 30 phrases
+gdown https://drive.google.com/uc?id=1sFQXDQZOzM5XoFkRD_9OYORfQdJrHmN4 #ckpt β-CLIP: BCE, β=0.5, 30 phrases

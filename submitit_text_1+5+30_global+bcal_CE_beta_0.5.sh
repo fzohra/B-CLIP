@@ -1,0 +1,43 @@
+python run_with_submitit_ft.py \
+  --job_name beta_clip_ce_0.5 \
+  --job_dir slurm/text_1+5+30_global+bcal_CE_beta_0.5_bs64_ep10 \
+  --output-dir ./ckpts/text_1+5+30_global+bcal_CE_beta_0.5_bs64_ep10 \
+  --dataset sharegpt4v \
+  --metadata data/ShareGPT4V/annotations/share-captioner_coco_lcs_sam_1246k_1107_filtered.json \
+  --root /ibex/project/c2262/SLIP/data/ShareGPT4V/data \
+  --resume pretrained/ViT-B-16.pt \
+  --model CLIP_VITB16_OPENAI \
+  --epochs 10 \
+  --batch-size 64 \
+  --update-freq 8 \
+  --eval-freq 1 \
+  --warmup-epochs 0.01 \
+  --lr-start 1e-9 \
+  --lr 1e-5 \
+  --lr-end 1e-7 \
+  --lr-conditioner 1e-3 \
+  --lr-conditioner-end 1e-4 \
+  --wd 0.01 \
+  --global-pool '' \
+  --context_length 248 \
+  --fg-loss-fn cls+tcil \
+  --text-conditioning-mode attn_pooling_mlp \
+  --use-text-conditioned-patches \
+  --use-text-eos \
+  --use-text-concepts \
+  --max-concept-context-length 30 \
+  --max-concepts 30 \
+  --use-tcl \
+  --cls-alpha 1 \
+  --tcil-alpha 1 \
+  --num_positive_samples 5 \
+  --tcil-loss-mode k_positives_ce \
+  --beta 0.5 \
+  --use-caption \
+  --use-caption-in-eos \
+  --ngpus 1 \
+  --nodes 4 \
+  --gpu_type a100 \
+  --timeout 999 \
+  --wandb
+
