@@ -83,8 +83,10 @@ These checkpoints can be downloaded using [download_ckpts.sh](download_ckpts.sh)
 @article{zohra2025β-CLIP,
   title={β-CLIP: Text-Conditioned Contrastive Learning for Multi-Granular Vision Language Alignment in CLIP},
   author={Zohra, Fatimah and Zhao, Chen and Itani, Hani and Ghanem, Bernard},
-  journal={arXiv preprint arXiv:},
-  year={2025}
+  journal={arXiv preprint},
+  year={2025},
+  eprint={2512.12678},
+  url={https://arxiv.org/abs/2512.12678}
 }
 ```
 
