@@ -663,8 +663,6 @@ def main(args):
         if (epoch + 1) % args.eval_freq != 0:
             continue
 
-        # val_stats = validate_zeroshot(val_loader, model, tokenizer, args, epoch, it)
-
         validate_fgovd(model, args.output_dir, epoch, it, args.wandb, tokenizer)
         validate_sharegpt4v(model, args.output_dir, epoch, it, args.wandb, tokenizer)
         validate_urban1k(model, args.output_dir, epoch, it, args.wandb, tokenizer)
@@ -679,7 +677,7 @@ def main(args):
                     'scaler': scaler.state_dict(),
                     'best_acc1': best_acc1,
                     'args': args,
-                }, is_best, args.output_dir, epoch + 1)
+                }, True, args.output_dir, epoch + 1)
 
         if not args.evaluate:
             log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
@@ -892,73 +890,6 @@ def train(train_loader, model, criterion, optimizer, scaler, epoch, lr_schedule,
             'logit_scale_tci_diversity': logit_scale_tci_diversity,
             'logit_scale_tci_diversity_eos': logit_scale_tci_diversity_eos,
             'logit_scale_tci_diversity_concepts': logit_scale_tci_diversity_concepts}, it
-
-
-def validate_zeroshot(val_loader, model, tokenizer, args, epoch, step):
-    batch_time = AverageMeter('Time', ':6.3f')
-    top1 = AverageMeter('Acc@1', ':6.2f')
-    top5 = AverageMeter('Acc@5', ':6.2f')
-    progress = ProgressMeter(
-        len(val_loader),
-        [batch_time, top1, top5],
-        prefix='Test: ')
-
-    # switch to evaluate mode
-    model.eval()
-
-    print('=> encoding captions')
-    cwd = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(cwd, 'templates.json')) as f:
-        templates = json.load(f)['imagenet']
-
-    with open(os.path.join(cwd, 'labels.json')) as f:
-        labels = json.load(f)['imagenet']
-
-    with torch.no_grad():
-        text_features = []
-        for l in labels:
-            texts = [t.format(l) for t in templates]
-            texts = tokenizer(texts).cuda(args.gpu, non_blocking=True)
-            class_embeddings = utils.get_model(model).encode_text(texts)
-            class_embeddings = class_embeddings / class_embeddings.norm(dim=-1, keepdim=True)
-            class_embeddings = class_embeddings.mean(dim=0)
-            class_embeddings = class_embeddings / class_embeddings.norm(dim=-1, keepdim=True)
-            text_features.append(class_embeddings)
-        text_features = torch.stack(text_features, dim=0)
-
-        end = time.time()
-        for i, inputs in enumerate(val_loader):
-            inputs = _to_cuda(inputs, args.gpu, non_blocking=True)
-            images = inputs[0]
-            target = inputs[1]
-            # encode images
-            image_features = utils.get_model(model).encode_image_by_block(images)
-            if image_features.dim() == 3:
-                image_features = image_features[:, 0, :]
-            image_features = image_features / image_features.norm(dim=-1, keepdim=True)
-
-            # cosine similarity as logits
-            logits_per_image = image_features @ text_features.t()
-
-            # measure accuracy and record loss
-            acc1, acc5 = accuracy(logits_per_image, target, topk=(1, 5))
-            acc1, acc5 = utils.scaled_all_reduce([acc1, acc5])
-            top1.update(acc1.item(), images.size(0))
-            top5.update(acc5.item(), images.size(0))
-
-            # measure elapsed time
-            batch_time.update(time.time() - end)
-            end = time.time()
-
-            if i % args.print_freq == 0:
-                progress.display(i)
-            
-    progress.synchronize()
-    print('0-shot * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
-          .format(top1=top1, top5=top5))
-    if utils.is_main_process() and args.wandb:
-        wandb.log({'ImageNet_0-shot_acc1': top1.avg, 'ImageNet_0-shot_acc5': top5.avg}, step=step)
-    return {'acc1': top1.avg, 'acc5': top5.avg}
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
