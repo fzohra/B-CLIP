@@ -30,6 +30,8 @@ If using submitit on a shared slurm cluster for multi-node training (ensure the 
 - `submitit_text_1+5+30_global+bcal_CE_beta_0.5.sh`: Multi-node training with CE loss
 - `submitit_text_1+5+30_global+bcal_BCE_beta_0.5.sh`: Multi-node training with BCE loss
 
+Change `/path/to/ckpts` in `run_with_submitit_ft.py` to your full checkpoint path.
+
 ## Evaluation
 
 For evaluation only, change the `--resume` config to point to a fine-tuned checkpoint and enable the `--evaluate` flag.

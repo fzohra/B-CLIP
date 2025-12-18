@@ -23,8 +23,8 @@ def parse_args():
 
 
 def get_shared_folder() -> Path:
-    if Path("/ibex/project/c2262/SLIP/.ckpts").is_dir():
-        p = Path(f"/ibex/project/c2262/SLIP/.ckpts")
+    if Path("/path/to/ckpts").is_dir():
+        p = Path(f"/path/to/ckpts")
         p.mkdir(exist_ok=True)
         return p
     raise RuntimeError("No shared folder available")
