@@ -221,8 +221,8 @@ def validate_fgovd(model, output_dir, epoch, step, log_wandb, tokenizer, device=
     model.eval()
     m = unwrap_model(model)
 
-    fgovd_dir = '/ibex/project/c2262/FG-CLIP/data/fgovd'
-    coco_dir  = '/ibex/project/c2262/SLIP/data/ShareGPT4V/data/coco/'
+    fgovd_dir = '/path/to/data/fgovd' #change
+    coco_dir  = '/path/to/data/coco/' #change
 
     W = 224
     transform = T.Compose([

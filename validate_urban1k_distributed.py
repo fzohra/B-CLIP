@@ -219,8 +219,8 @@ def validate_urban1k(model, output_dir, epoch, step, log_wandb, tokenizer, devic
     model.eval()
     m = unwrap_model(model)
     
-    image_root = '/ibex/project/c2262/SLIP/data/Urban1k/image/'
-    caption_root = '/ibex/project/c2262/SLIP/data/Urban1k/caption/'
+    image_root = 'data/Urban1k/image/'
+    caption_root = 'data/Urban1k/caption/'
     
     img_res = 224
     val_transform = T.Compose([

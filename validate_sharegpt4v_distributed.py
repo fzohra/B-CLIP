@@ -226,8 +226,8 @@ def validate_sharegpt4v(model, output_dir, epoch, step, log_wandb, tokenizer, de
     m = unwrap_model(model)
     
     # ShareGPT4V dataset paths - these should match your data setup
-    metadata_path = '/ibex/project/c2262/SLIP/data/ShareGPT4V/data/sharegpt4v/share-captioner_coco_lcs_sam_1246k_1107_filtered.json'
-    root_path = '/ibex/project/c2262/SLIP/data/ShareGPT4V/data'
+    metadata_path = 'data/ShareGPT4V/annotations/share-captioner_coco_lcs_sam_1246k_1107_filtered.json'
+    root_path = 'data/ShareGPT4V/data'
     
     # Create validation transform
     img_res = 224
