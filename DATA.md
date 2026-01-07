@@ -6,7 +6,7 @@ This project uses a filtered subset of the **ShareGPT4V** dataset, a large-scale
   **Download Data**:
 - LAION-CC-SBU-558K: [images.zip](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain/blob/main/images.zip)
 - COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
-- SAM: [images](https://ai.meta.com/datasets/segment-anything-downloads/). We use 000000~000050.tar. The links are provided in [sam.txt](data/ShareGPT4V/data/sam/sam.txt)
+- SAM: [images](https://ai.meta.com/datasets/segment-anything-downloads/). We use 000000~000050.tar.
 
    **Download Scripts**:
    For the LAION-CC-SBU-558K and COCO images:
